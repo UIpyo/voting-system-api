@@ -1,0 +1,1 @@
+//use jwt -> check authorization token -> if (admin, orSelf) give access
