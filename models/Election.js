@@ -10,10 +10,10 @@ const ElectionSchema = new mongoose.Schema({
         enum: ['local','panchayat','district','city','state','country'],
         required: true
     },
-    resultDate: {
-        type: Date,
-        required: true
-    },
+    // resultDate: {
+    //     type: Date,
+    //     required: true
+    // },
     numberOfCandidate: {
         type: Number,
         required: true,
@@ -27,11 +27,21 @@ const ElectionSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    votersApproved: {
-        type: Number,
+    result: [{
+            candidate: mongoose.Schema.Types.ObjectId,
+            count: Number,
+            votePercentage: Number
+    }],
+    address: {
+        type: String,
         required: true,
-        default: 0
+        unique: true
     }
+    // voterCount: {
+    //     type: Number,
+    //     required: true,
+    //     default: 0
+    // }
 })
 
 module.exports = mongoose.model("Election", ElectionSchema);

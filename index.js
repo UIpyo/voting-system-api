@@ -4,6 +4,8 @@ const env = require('dotenv').config();
 const mongoose = require('mongoose');
 const PORT = 8080;
 
+//TODO: Add the constants in .env
+
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 
