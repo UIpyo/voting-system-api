@@ -3,11 +3,21 @@ const app = express();
 const env = require('dotenv').config();
 const mongoose = require('mongoose');
 const PORT = 8080;
+const user = require('./routes/User');
+const election = require('./routes/Election');
 
 //TODO: Add the constants in .env
 
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
+app.use('/users', user);
+app.use('/elections', election);
+
+app.get('/',(req, res) => {
+    return res.send({"msg" : "We are on home page"})
+})
+
+//TODO: Add routes
 
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,

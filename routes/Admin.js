@@ -78,3 +78,5 @@ router.route('/:adminId')
             return res.send({"error" : `Error caught when updating:: ${err}`})
         }
     })
+
+    module.exports = router;

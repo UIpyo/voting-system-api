@@ -14,21 +14,29 @@ const ElectionSchema = new mongoose.Schema({
     //     type: Date,
     //     required: true
     // },
-    numberOfCandidate: {
-        type: Number,
-        required: true,
-        default: 0
-    },
+    // numberOfCandidate: {
+    //     type: Number,
+    //     required: true,
+    //     default: 0
+    // },
     candidates: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: "User"
+        ref: "users"
+    },
+    listClosed: {
+        type: Boolean,
+        required: true,
+        default: false
     },
     electionDate: {
         type: Date,
         required: true
     },
     result: [{
-            candidate: mongoose.Schema.Types.ObjectId,
+            candidate: {
+                type: mongoose.Schema.Types.ObjectId, 
+                ref: 'users'
+            },
             count: Number,
             votePercentage: Number
     }],
@@ -44,4 +52,4 @@ const ElectionSchema = new mongoose.Schema({
     // }
 })
 
-module.exports = mongoose.model("Election", ElectionSchema);
+module.exports = mongoose.model("elections", ElectionSchema);

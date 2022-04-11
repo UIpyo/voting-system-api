@@ -38,6 +38,11 @@ const UserSchema = new mongoose.Schema({
             unique: (true, "This aadhar has already been registered")
         },
     },
+    associatedElection: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Election',
+        index: true
+    },
     authLevel: {
         type: String,
         enum: ['voter', 'candidate', 'admin'],
@@ -61,4 +66,4 @@ const UserSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model("User",UserSchema);
+module.exports = mongoose.model("users",UserSchema);

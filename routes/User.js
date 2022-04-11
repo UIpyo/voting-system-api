@@ -3,8 +3,7 @@ const router = require('express').Router();
 const hasAccess = require('../controller/hasAccess');
 const passwordHash = require('../controller/passwordHash');
 const User = require('../models/User');
-
-
+const admin = require('./Admin');
 
 // onlyUser can modify their own data not after they have been verified (when user.status == registered)
 // hasAccess should handle the req.params.UserId == authorizationToken.Id || Admin
@@ -12,27 +11,30 @@ const User = require('../models/User');
 // admin should be able to update the status => Put that in the code later
 
 // ? -> is res.send is closing statement
+router.use('/admins',admin);
 
 router.post('/', async (req,res) => {
 
     // should I use optional chaining '?.' here 
-    const newUser = {
-        info: {name: req.body?.name,
-        dateOfBirth: req.body?.dateOfBirth,
-        email: req.body?.email,
-        phoneNumber: req.body?.phoneNumber,
-        guardianName: {
-            guardian: req.body?.guardian,
-            name: req.body?.guardianName
+    let newUser = {
+        info: {
+            name: req.body?.name,
+            dateOfBirth: req.body?.dateOfBirth,
+            email: req.body?.email,
+            phoneNumber: req.body?.phoneNumber,
+            guardianName: {
+                guardian: req.body?.guardian,
+                name: req.body?.guardianName
+            },
+            aadharNumber: req.body?.aadharNumber
         },
-        aadharNumber: req.body?.aadharNumber},
         address: req.body?.address,
         authLevel: req.body?.authLevel
     }
 
     try {
         if(newUser.authLevel === 'admin') throw 'Only an admin can create another admin';
-        const hashedPassword = await passwordHash(req.body.password)
+        const hashedPassword = await passwordHash(req.body?.password)
         newUser.password = hashedPassword;
         const savedUser = new User(newUser);
         const doc = await savedUser.save();
@@ -45,6 +47,10 @@ router.post('/', async (req,res) => {
     catch(err){
         return res.send({"error" : `Error caught when posting user::${err}`})
     }
+})
+
+router.get('/', (req, res) => {
+    return res.send({"msg":"this is /user"})
 })
 
 router.route('/:userId', hasAccess.isAuthenticated)
@@ -91,3 +97,4 @@ router.route('/:userId', hasAccess.isAuthenticated)
         }
     })
 
+module.exports = router;

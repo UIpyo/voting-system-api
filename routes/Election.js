@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { isAuthenticated } = require('../controller/hasAccess');
 const Election = require('../models/Election');
+const candidate = require('./Candidate');
 
 //TODO: Create 'onlyAdmin' middleware later
 // /elections/
@@ -39,6 +40,9 @@ router.route('/')
         }
     })
 
+router.use('/:electionId/candidates', candidate);
+
+
 router.route('/:electionId')
     .get(async (req,res) => {
         try {
@@ -71,3 +75,5 @@ router.route('/:electionId')
             return res.send({"error" : `Error caught when updating election::${err}`})
         }
     })
+
+    module.exports = router;
