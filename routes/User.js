@@ -18,7 +18,7 @@ router.post('/', async (req,res) => {
     // should I use optional chaining '?.' here 
     let newUser = {
         info: {
-            name: req.body?.name,
+            name: req.body.name,
             dateOfBirth: req.body?.dateOfBirth,
             email: req.body?.email,
             phoneNumber: req.body?.phoneNumber,
@@ -45,7 +45,8 @@ router.post('/', async (req,res) => {
         return res.send({"msg": {"doc" : doc, "token" : token}});
     }
     catch(err){
-        return res.send({"error" : `Error caught when posting user::${err}`})
+        console.log(newUser);
+        return res.status(400).send({"error" : `Error caught when posting user::${err}`})
     }
 })
 

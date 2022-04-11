@@ -13,19 +13,20 @@ const UserSchema = new mongoose.Schema({
         email: {
             type: String,
             required: true,
-            unique: (true, "Email has been already used"),
+            unique: true
             // index: true
         },
         phoneNumber: {
             type: Number,
             required: true,
-            unique: (true, "Phone number has already been used")
+            unique: true
         },
         guardianName: {
             type: {
                 guardian : {
                     type: String,
-                    enum: ['FATHER','MOTHER']
+                    enum: ['FATHER','MOTHER'],
+                    required: true
                 },
                 name: String
             },
@@ -35,7 +36,7 @@ const UserSchema = new mongoose.Schema({
             type: Number,
             length: 16,
             required: true,
-            unique: (true, "This aadhar has already been registered")
+            unique: true
         },
     },
     associatedElection: {
@@ -62,7 +63,7 @@ const UserSchema = new mongoose.Schema({
     address: {
         type: String,
         required: true,
-        unique: (true, "This address has already been registered")
+        unique: true
     }
 })
 

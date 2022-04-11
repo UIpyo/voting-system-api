@@ -37,7 +37,7 @@ router.route('/')
         }
         try{
             newAdmin.password = await passwordHash(req.body.password);
-            const admin = new Admin(newAdmin);
+            const admin = new User(newAdmin);
             const doc = await admin.save();
             return res.send({"msg" : doc})
         }

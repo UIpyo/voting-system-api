@@ -14,11 +14,18 @@ const generateToken = payload => {
 }
 
 // handling error
-const verifyToken = token => {
-    return new Promise(jwt.verify(token, process.env.JWT_SECRET, (err, decoded)=> {
-        if(err) reject(err)
-        resolve(decoded)
-    }))
+const verifyToken = async token => {
+    // return new Promise(jwt.verify(token, process.env.JWT_SECRET, (err, decoded)=> {
+    //     if(err) reject(err)
+    //     resolve(decoded)
+    // }))
+    try{
+        const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+        return decoded;
+    }
+    catch(err) {
+        return {"error" : `Error caught when verifying token :: ${err}`}
+    }
 }
 
 // const authorized = () => {}
@@ -31,7 +38,7 @@ const isAuthenticated = async (req, res, next) => {
             req.headers.auth = true;
             req.headers.user = decoded.userId;
             req.headers.authLevel = decoded.authLevel;
-            next();
+            return next();
         }
         catch(err) {
             return res.send({"error" : `Error caught at verifying authentication::${err}`})
