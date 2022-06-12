@@ -59,7 +59,7 @@ router.route('/:userId', hasAccess.isAuthenticated)
         if(!req.headers.auth || req.headers.user!==req.params.userId){
             return res.send({"msg" : "Not authenticated or don't match your id"});
         }
-        const {name, dateOfBirth, email, phoneNumber, guardianName, aadharNumber, address} = req.body;
+        const {name, dateOfBirth, email, phoneNumber, guardian, guardianName, aadharNumber, address} = req.body;
             const update = {
                 info :{
                     name: name,
@@ -67,6 +67,7 @@ router.route('/:userId', hasAccess.isAuthenticated)
                     email: email,
                     phoneNumber: phoneNumber,
                     guardianName: {
+                        guardian: guardian,
                         name: guardianName
                     },
                     aadharNumber: aadharNumber

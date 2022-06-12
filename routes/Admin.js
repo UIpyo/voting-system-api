@@ -3,7 +3,7 @@ const { isAuthenticated } = require('../controller/hasAccess');
 const passwordHash = require('../controller/passwordHash');
 const User = require('../models/User');
 
-//TODO: add route in the User.js
+//add route in the User.js
 // /users/admins
 router.route('/')
     .get(async (req,res) => {

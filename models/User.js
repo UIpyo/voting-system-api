@@ -26,6 +26,7 @@ const UserSchema = new mongoose.Schema({
                 guardian : {
                     type: String,
                     enum: ['FATHER','MOTHER'],
+                    default: 'FATHER',
                     required: true
                 },
                 name: String

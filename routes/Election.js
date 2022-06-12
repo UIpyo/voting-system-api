@@ -3,7 +3,7 @@ const { isAuthenticated } = require('../controller/hasAccess');
 const Election = require('../models/Election');
 const candidate = require('./Candidate');
 
-//TODO: Create 'onlyAdmin' middleware later
+// Create 'onlyAdmin' middleware later
 // /elections/
 router.route('/')
     .get(async (req,res) => {
@@ -61,11 +61,13 @@ router.route('/:electionId')
             const date = new Date();
             if(date >= electionInfo.electionDate)
                 return res.send({"msg" : "Can't update anymore"})
-            const {name, level, electionDate} = req.body;
+            const {name, level, electionDate, listClosed} = req.body;
             const updatedElectionInfo = {
-                name: name,
-                level: level,
-                electionDate: electionDate
+                _id : electionInfo._id,
+                name: (name ? name : electionInfo.name),
+                level: (level ? level : electionInfo.level),
+                electionDate: (electionDate ? electionDate : electionInfo.electionDate),
+                listClosed : (listClosed ? listClosed : electionInfo.listClosed)
             }
             const doc = await electionInfo.updateOne(updatedElectionInfo);
             //TODO:check later if it returns the updated doc or not 
